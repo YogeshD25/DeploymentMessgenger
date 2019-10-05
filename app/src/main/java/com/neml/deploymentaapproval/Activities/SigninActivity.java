@@ -51,6 +51,7 @@ public class SigninActivity extends AppCompatActivity {
                 // redirect to LoginActivity
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

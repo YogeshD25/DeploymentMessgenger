@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.neml.deploymentaapproval.Logger.Logg;
+import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
 
 import androidx.annotation.NonNull;
 
@@ -37,10 +38,15 @@ public class FCMTokenReceiver extends IntentService {
                         token = task.getResult().getToken();
 
                         Logg.d("Firebase registrationToken= " + token);
+                        sendTokenToServer();
 
                         //TODO register token to your server.
 
                     }
                 });
+    }
+
+    private void sendTokenToServer() {
+//        NetworkUtils.postConnectionSendToken(get)
     }
 }

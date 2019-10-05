@@ -1,6 +1,7 @@
 package com.neml.deploymentaapproval.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.neml.deploymentaapproval.Activities.DeploymentDetails;
 import com.neml.deploymentaapproval.Model.ModelDisplayDetails;
 import com.neml.deploymentaapproval.R;
 
@@ -53,7 +55,8 @@ public DeploymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Card", Toast.LENGTH_SHORT).show();
+                Intent intent =  new Intent(context, DeploymentDetails.class);
+                context.startActivity(intent);
             }
         });
 //        int id = context.getResources().getIdentifier("yourpackagename:drawable/" + , null, null);
@@ -73,7 +76,6 @@ public DeploymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     TextView textDeploymentNo, textRFCseqno, textDeploymentType, textVersionNo, textSRNno,
             textProjectName, textUatApprovalName, textCreatedDate, textRequesterName, textRequestermanager,textApplicationURL;
     ImageView imageView;
-    Button btnApprove , btnReject;
     CardView cardView;
 
     public DeploymentViewHolder(View itemView) {
@@ -90,8 +92,6 @@ public DeploymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         textDeploymentType = itemView.findViewById(R.id.textDeploymentType);
         textSRNno = itemView.findViewById(R.id.textSRNno);
         textVersionNo = itemView.findViewById(R.id.textVersionNo);
-        btnApprove = itemView.findViewById(R.id.btnApprove);
-        btnReject = itemView.findViewById(R.id.btnReject);
         cardView = itemView.findViewById(R.id.deploymentCard);
 
         imageView = itemView.findViewById(R.id.imageView);

@@ -4,4 +4,14 @@
     <color name="colorPrimaryDark">#76a5df</color>
     <color name="colorAccent">#ffff8800</color>
     <color name="zircon">#e0e6e4</color>
+    <color name="pink">#fe59d7</color>
+    <color name="lightpink">#edb5f5</color>
+    <color name="red">#b22222</color>
+    <color name="yellow">#f1bc31</color>
+    <color name="cyan">#94ceca</color>
+    <color name="purple">#5026a7</color>
+    <color name="lightgreen">#c9d99e</color>
+    <color name="orange">#ed5107</color>
+    <color name="lightred">#c70d3a</color>
+    <color name="blackColor">#000000</color>
 </resources>

@@ -6,7 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="MenuTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
@@ -15,5 +15,24 @@
     <style name="AppTheme.NoActionBar" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="page_background_wh">
+<!--        <item name="android:background">@drawable/white_gray_gradient_background</item>-->
+<!--        <item name="android:paddingLeft">@dimen/activity_horizontal_padding</item>-->
+<!--        <item name="android:paddingRight">@dimen/activity_horizontal_padding</item>-->
+    </style>
+
+
+
+    <style name="horizontal_line_wh">
+        <item name="android:background">#00000000</item>
+    </style>
+
+    <color name="actionbar_bg_wh">#AFAFAF</color>
+
+    <style name="action_bar_wh" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/actionbar_bg_wh</item>
+        <item name="background">@color/actionbar_bg_wh</item>
     </style>
 </resources>

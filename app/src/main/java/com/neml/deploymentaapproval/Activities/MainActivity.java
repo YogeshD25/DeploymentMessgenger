@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 //loginUser();
                 Intent intent = new Intent(MainActivity.this,MenuActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });

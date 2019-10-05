@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/deploymentCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+<LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deploymentCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="@dimen/small_padding"
+    card_view:cardBackgroundColor="@color/lightgreen"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="5dp"
+    card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -15,12 +23,12 @@
                 android:id="@+id/imageView"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
-                android:background="@drawable/logo"
+                android:background="@drawable/neml"
                 android:padding="4dp" />
 
             <TextView
                 android:id="@+id/textDeploymentNo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/imageView"
@@ -47,7 +55,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/imageView"
-                android:background="@color/colorPrimary"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="4.7"
@@ -133,28 +140,8 @@
                 android:layout_toRightOf="@id/imageView"
                 android:text="INR 56990"
                 />
-            <Button
-                    android:id="@+id/btnApprove"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textVersionNo"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@id/imageView"
-                    android:text="INR 56990"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
-            <Button
-                android:id="@+id/btnReject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/btnApprove"
-                android:layout_marginLeft="22dp"
-                android:layout_marginBottom="3dp"
-                android:layout_toRightOf="@id/btnApprove"
-                android:text="INR 56990" />
-
 
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+</LinearLayout>
