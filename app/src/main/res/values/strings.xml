@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DeploymentAapproval</string>
+    <string name="app_name">DeploymentApproval</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="login">Login</string>

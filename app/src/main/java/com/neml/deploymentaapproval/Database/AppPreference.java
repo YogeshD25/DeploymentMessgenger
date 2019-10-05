@@ -30,6 +30,15 @@ public class AppPreference {
         editor.putString(Keys.KEY_USERID, userID);
         editor.commit();
     }
+    public boolean getLoginDone() {
+        return preferences.getBoolean(Keys.KEY_IS_LOGIN_DONE, false);
+    }
+
+    public void setloginDone(boolean isDone) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Keys.KEY_IS_LOGIN_DONE, isDone);
+        editor.commit();
+    }
 
     private interface Config {
         String PREFERENCE_NAME = "DeploymentMessenger";
@@ -37,5 +46,6 @@ public class AppPreference {
     private interface Keys extends AppPreference.Config {
         String KEY_USERID = "_userId";
         String KEY_USER_PASSWORD = "_password";
+        String KEY_IS_LOGIN_DONE = "false";
     }
 }

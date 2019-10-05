@@ -11,6 +11,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.neml.deploymentaapproval.Logger.Logg;
 import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
+import com.neml.deploymentaapproval.Utils.Constants;
 
 import androidx.annotation.NonNull;
 
@@ -47,6 +48,7 @@ public class FCMTokenReceiver extends IntentService {
     }
 
     private void sendTokenToServer() {
-//        NetworkUtils.postConnectionSendToken(get)
+
+        NetworkUtils.postConnectionSendToken(getApplicationContext(), Constants.UrlLinks.sendToken,token);
     }
 }

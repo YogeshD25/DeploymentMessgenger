@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,15 +38,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+
+import com.neml.deploymentaapproval.Database.AppPreference;
 import com.neml.deploymentaapproval.FCMConnection.FCMTokenReceiver;
 import com.neml.deploymentaapproval.Logger.Logg;
+import com.neml.deploymentaapproval.Model.ModelRegistration;
+import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
 import com.neml.deploymentaapproval.R;
+import com.neml.deploymentaapproval.Utils.Constants;
+import com.neml.deploymentaapproval.Utils.utils;
 
 public class MainActivity extends AppCompatActivity {
     EditText email, passWord;
     Button login;
     TextView register;
     boolean isEmailValid, isPasswordValid;
+    AppPreference appPreference;
+    ModelRegistration modelRegistration = new ModelRegistration();
     TextInputLayout emailError, passError;
     private String URLline = "http://172.22.22.71:8080/NeMLDeploymentTracker/login/validateUserAndroid/";
 
@@ -51,27 +62,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        appPreference =  new AppPreference(MainActivity.this);
         initUI();
         Logg.d();
         sendFcmRegistrationToken();
-
-//
-//        if (android.os.Build.VERSION.SDK_INT > 9)
-//        {
-//            StrictMode.ThreadPolicy policy = new
-//                    StrictMode.ThreadPolicy.Builder().permitAll().build();
-//            StrictMode.setThreadPolicy(policy);
-//        }
-
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SetValidation();
                 //loginUser();
-                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
-                startActivity(intent);
-                finish();
+                postConnectionLogin(MainActivity.this, Constants.UrlLinks.login,modelRegistration);
+//                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+//                startActivity(intent);
+                //finish();
 
             }
         });
@@ -91,17 +94,17 @@ public class MainActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel);
         }
 
-        FirebaseMessaging.getInstance().subscribeToTopic("general")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        String msg = "Successfull";
-                        if(!task.isSuccessful()){
-                            msg = "Failed";
-                        }
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
+//        FirebaseMessaging.getInstance().subscribeToTopic("general")
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        String msg = "Successfull";
+//                        if(!task.isSuccessful()){
+//                            msg = "Failed";
+//                        }
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
     }
 
     private void initUI() {
@@ -129,9 +132,17 @@ public class MainActivity extends AppCompatActivity {
             isPasswordValid = true;
             passError.setErrorEnabled(false);
         }
+        if(isEmailValid && isPasswordValid){
+            modelRegistration.setUserId(email.getText().toString());
+            modelRegistration.setUserPassowrd(passWord.getText().toString());
+        }else{
+            utils.getSimpleDialog(MainActivity.this,"Please Enter prpper Credentails").show();
+
+        }
 
 
     }
+
     private void loginUser(){
 
         final String username = email.getText().toString().trim();
@@ -220,6 +231,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
     public void parseData(String response) {
 
         try {
@@ -271,6 +284,58 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 apiAvailability.getErrorDialog(this, resultCode, 1).show();
             }
+        }
+    }
+
+    public void postConnectionLogin(final Context mContext, String url, final ModelRegistration modelRegistration){
+        try {
+            final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+            String URL = url;
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("userId", modelRegistration.getUserId());
+            jsonBody.put("userPassword", modelRegistration.getUserPassowrd());
+            final String requestBody = jsonBody.toString();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("VOLLEY", response);
+                    utils.getSimpleDialog(MainActivity.this,response).show();
+                    appPreference.setUserID(modelRegistration.getUserId());
+                    appPreference.setPassword(modelRegistration.getUserPassowrd());
+                    appPreference.setloginDone(true);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    utils.getSimpleDialog(MainActivity.this,error.toString()).show();
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return requestBody == null ? null : requestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                        return null;
+                    }
+                }
+            };
+
+            requestQueue.add(stringRequest);
+        } catch (
+                JSONException e) {
+            e.printStackTrace();
         }
     }
 
