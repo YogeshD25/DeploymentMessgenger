@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     ModelRegistration modelRegistration = new ModelRegistration();
     TextInputLayout emailError, passError;
     private String URLline = "http://172.22.22.71:8080/NeMLDeploymentTracker/login/validateUserAndroid/";
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
