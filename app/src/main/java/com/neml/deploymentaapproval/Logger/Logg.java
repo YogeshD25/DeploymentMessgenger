@@ -5,7 +5,7 @@ import android.util.Log;
 import com.neml.deploymentaapproval.BuildConfig;
 
 public class Logg {
-    private static final String TAG = "MyAppDebug";
+    private static final String TAG = "Deployment Approval";
         private static final boolean debuggable = BuildConfig.DEBUG;
 
         public static void d() {

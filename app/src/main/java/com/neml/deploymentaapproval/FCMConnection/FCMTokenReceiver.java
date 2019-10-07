@@ -3,7 +3,6 @@ package com.neml.deploymentaapproval.FCMConnection;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,14 +30,11 @@ public class FCMTokenReceiver extends IntentService {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-
                             Logg.d("Firebase getInstanceId failed " + task.getException());
                             return;
                         }
-
                         // Get new Instance ID token
                         token = task.getResult().getToken();
-
                         Logg.d("Firebase registrationToken= " + token);
                         sendTokenToServer();
 
@@ -60,7 +56,7 @@ public class FCMTokenReceiver extends IntentService {
 
 
     private void sendTokenToServer() {
-
-        NetworkUtils.postConnectionSendToken(getApplicationContext(), Constants.UrlLinks.sendToken,token);
+        AppPreference appPreference = new AppPreference(getApplicationContext());
+        NetworkUtils.postConnectionSendToken(getApplicationContext(), Constants.UrlLinks.sendToken,token,appPreference.getUserID());
     }
 }

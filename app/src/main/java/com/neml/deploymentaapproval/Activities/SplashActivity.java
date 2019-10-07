@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         appPreference = new AppPreference(SplashActivity.this);
-       // sendFcmRegistrationToken();
+        sendFcmRegistrationToken();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -45,9 +45,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         Logg.d();
-        //sendFcmRegistrationToken();
+        sendFcmRegistrationToken();
     }
 
     @Override

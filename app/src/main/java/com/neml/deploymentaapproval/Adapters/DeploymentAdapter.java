@@ -2,16 +2,15 @@ package com.neml.deploymentaapproval.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.neml.deploymentaapproval.Activities.DeploymentDetails;
-import com.neml.deploymentaapproval.Model.ModelDisplayDetails;
+import com.neml.deploymentaapproval.Model.ModelNotificationList;
 import com.neml.deploymentaapproval.R;
 
 import java.util.ArrayList;
@@ -23,9 +22,9 @@ public class DeploymentAdapter extends RecyclerView.Adapter<DeploymentAdapter.De
 
 private Context context;
 
-private ArrayList<ModelDisplayDetails> deploymentList;
+private ArrayList<ModelNotificationList> deploymentList;
 
-public DeploymentAdapter(Context mCtx, ArrayList<ModelDisplayDetails> productList) {
+public DeploymentAdapter(Context mCtx, ArrayList<ModelNotificationList> productList) {
         this.context = mCtx;
         this.deploymentList = productList;
         }
@@ -40,27 +39,28 @@ public DeploymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
     @Override
     public void onBindViewHolder(DeploymentViewHolder holder, int position) {
-        ModelDisplayDetails deployment = deploymentList.get(position);
+        final ModelNotificationList deployment = deploymentList.get(position);
         holder.textDeploymentNo.setText(deployment.getDeploymentNo());
         holder.textRFCseqno.setText(deployment.getRfcSeqNo());
-        holder.textRequesterName.setText(String.valueOf(deployment.getRequesterName()));
-        holder.textRequestermanager.setText(String.valueOf(deployment.getRequesterManager()));
-        holder.textApplicationURL.setText(String.valueOf(deployment.getApplicationUrl()));
+        holder.textRequesterName.setText(String.valueOf(deployment.getPreparedBy()));
+        holder.textRequestermanager.setText(String.valueOf(deployment.getApprovedBy()));
+        holder.textApplicationURL.setText(String.valueOf(deployment.getProjectUrl()));
         holder.textCreatedDate.setText(String.valueOf(deployment.getCreatedDate()));
-        holder.textUatApprovalName.setText(String.valueOf(deployment.getUatApprovarName()));
+        holder.textUatApprovalName.setText(String.valueOf(deployment.getUatApprovar()));
         holder.textProjectName.setText(String.valueOf(deployment.getProjectName()));
         holder.textDeploymentType.setText(String.valueOf(deployment.getDeploymentType()));
         holder.textSRNno.setText(String.valueOf(deployment.getSrnNo()));
         holder.textVersionNo.setText(String.valueOf(deployment.getVersionNo()));
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(context, DeploymentDetails.class);
-                context.startActivity(intent);
+                Intent send = new Intent(context,DeploymentDetails.class);
+                Bundle b = new Bundle();
+                b.putSerializable("serialzable",deployment);
+                send.putExtras(b);
+                context.startActivity(send);
             }
         });
-//        int id = context.getResources().getIdentifier("yourpackagename:drawable/" + , null, null);
-//        holder.imageView.setImageDrawable(context.getResources().getDrawable()));
 
         }
 

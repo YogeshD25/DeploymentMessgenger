@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGrey"
     tools:context=".Activities.MenuActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -23,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:text="WELCOME USERNAME"/>
+        android:text="WELCOME DINESH"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

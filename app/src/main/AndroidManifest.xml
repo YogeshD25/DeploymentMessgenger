@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.neml.deploymentaapproval">
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.NotificationList"
-            android:theme="@style/MenuTheme"></activity>
-        <activity android:name=".Activities.DeploymentDetails" />
+        <activity android:name=".Activities.AboutActivity"></activity>
+        <activity android:name=".Activities.SettingActivity" />
+        <activity
+            android:name=".Activities.NotificationList"
+            android:theme="@style/MenuTheme" />
+        <activity
+            android:name=".Activities.DeploymentDetails"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Activities.MenuActivity"
             android:theme="@style/AppTheme" />
@@ -36,5 +39,8 @@
         </service>
         <service android:name=".FCMConnection.FCMTokenReceiver" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

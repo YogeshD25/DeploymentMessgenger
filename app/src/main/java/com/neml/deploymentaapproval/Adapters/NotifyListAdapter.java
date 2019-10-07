@@ -2,13 +2,14 @@ package com.neml.deploymentaapproval.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.neml.deploymentaapproval.Activities.DeploymentDetails;
-import com.neml.deploymentaapproval.Model.ModelNotificationListItem;
+import com.neml.deploymentaapproval.Model.ModelNotificationList;
 import com.neml.deploymentaapproval.R;
 
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ public class NotifyListAdapter extends RecyclerView.Adapter<NotifyListAdapter.No
 
     private Context context;
 
-    private ArrayList<ModelNotificationListItem> notifyList;
+    private ArrayList<ModelNotificationList> notifyList;
 
-    public NotifyListAdapter(Context mCtx, ArrayList<ModelNotificationListItem> notifyList) {
+    public NotifyListAdapter(Context mCtx, ArrayList<ModelNotificationList> notifyList) {
         this.context = mCtx;
         this.notifyList = notifyList;
     }
@@ -36,16 +37,19 @@ public class NotifyListAdapter extends RecyclerView.Adapter<NotifyListAdapter.No
 
     @Override
     public void onBindViewHolder(NotifyListViewHolder holder, int position) {
-        ModelNotificationListItem notify = notifyList.get(position);
-        holder.textApplication.setText(notify.getApplication());
-        holder.textReleaseType.setText(notify.getReleaseType());
-        holder.textVersion.setText(String.valueOf(notify.getVersion()));
-        holder.textReleaseinfo.setText(String.valueOf(notify.getReleaseInfo()));
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        final ModelNotificationList notify = notifyList.get(position);
+        holder.textApplication.setText(notify.getProjectName());
+        holder.textReleaseType.setText(notify.getReviewBy());
+        holder.textVersion.setText(String.valueOf(notify.getVersionNo()));
+        holder.textReleaseinfo.setText(String.valueOf(notify.getPreparedBy()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(context, DeploymentDetails.class);
-                context.startActivity(intent);
+                Intent send = new Intent(context,DeploymentDetails.class);
+                Bundle b = new Bundle();
+                b.putSerializable("serialzable",notify);
+                send.putExtras(b);
+                context.startActivity(send);
             }
         });
 
