@@ -4,8 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class AppPreference {
-    private Context mContext;
+    private static Context mContext;
     private SharedPreferences preferences;
+    private static AppPreference instance;
+    public static AppPreference getInstance(){
+        if ( instance == null){
+            instance = new AppPreference(mContext);
+        }
+        return instance;
+    }
 
     public AppPreference(Context context) {
         mContext = context;

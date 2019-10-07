@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.neml.deploymentaapproval.Database.AppPreference;
 import com.neml.deploymentaapproval.Logger.Logg;
 import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
 import com.neml.deploymentaapproval.Utils.Constants;
@@ -46,6 +47,17 @@ public class FCMTokenReceiver extends IntentService {
                     }
                 });
     }
+    private void sendRegistrationToServer(String token) {
+        // Add custom implementation, as needed.
+     ///   AppPreference.getInstance(this).setValue(getString(R.string.firebase_cloud_messaging_token), token);
+
+        // To implement: Only if user is registered, i.e. UserId is available in preference, update token on server.
+      //  int userId = SharedPreferenceUtils.getInstance(this).getIntValue(getString(R.string.user_id), 0);
+        //if (userId != 0) {
+            // Implement code to update registration token to server
+       // }
+    }
+
 
     private void sendTokenToServer() {
 

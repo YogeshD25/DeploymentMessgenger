@@ -19,11 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
@@ -38,12 +44,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.neml.deploymentaapproval.Database.AppPreference;
 import com.neml.deploymentaapproval.FCMConnection.FCMTokenReceiver;
 import com.neml.deploymentaapproval.Logger.Logg;
 import com.neml.deploymentaapproval.Model.ModelRegistration;
+import com.neml.deploymentaapproval.NetworkUtils.HttpsTrustManager;
 import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
+import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
 import com.neml.deploymentaapproval.Utils.utils;
@@ -54,10 +64,11 @@ public class MainActivity extends AppCompatActivity {
     TextView register;
     boolean isEmailValid, isPasswordValid;
     AppPreference appPreference;
+    RequestQueue mRequestQueue;
     ModelRegistration modelRegistration = new ModelRegistration();
     TextInputLayout emailError, passError;
     private String URLline = "http://172.22.22.71:8080/NeMLDeploymentTracker/login/validateUserAndroid/";
-    
+    private String url  ="http://reqres.in/api/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +77,14 @@ public class MainActivity extends AppCompatActivity {
         appPreference =  new AppPreference(MainActivity.this);
         initUI();
         Logg.d();
-        sendFcmRegistrationToken();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SetValidation();
                 //loginUser();
-                postConnectionLogin(MainActivity.this, Constants.UrlLinks.login,modelRegistration);
+                HttpsTrustManager.allowAllSSL();
+                postLogin();
+               // postConnectionLogin(MainActivity.this, Constants.UrlLinks.login,modelRegistration);
 //                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
 //                startActivity(intent);
                 //finish();
@@ -256,24 +268,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        Logg.d();
-        sendFcmRegistrationToken();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Logg.d();
-    }
-
-    private void sendFcmRegistrationToken() {
-        Intent intent = new Intent(this, FCMTokenReceiver.class);
-        startService(intent);
-    }
 
     private void checkGoogleApiAvailability() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
@@ -286,6 +280,42 @@ public class MainActivity extends AppCompatActivity {
                 apiAvailability.getErrorDialog(this, resultCode, 1).show();
             }
         }
+    }
+
+    public void postLogin() {
+        url = "https://reqres.in/api/login";
+        //Added part from docs
+        Cache cache = new DiskBasedCache(this.getCacheDir(), 1024 * 1024);
+        Network network = new BasicNetwork(new HurlStack());
+        mRequestQueue = new RequestQueue(cache, network);
+        mRequestQueue.start();
+
+
+        Map<String, String> params = new HashMap();
+        params.put("email", "eve.holt@reqres.in");
+        params.put("password", "cityslicka");
+
+        JSONObject parameters = new JSONObject(params);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //TODO: handle success
+                try {
+                    utils.getSimpleDialog(MainActivity.this,response.getString("token")).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                //TODO: handle failure
+            }
+        });
+        SingleRequestQueue.getInstance(MainActivity.this).addToRequestQueue(jsonRequest);
     }
 
     public void postConnectionLogin(final Context mContext, String url, final ModelRegistration modelRegistration){
@@ -338,6 +368,16 @@ public class MainActivity extends AppCompatActivity {
                 JSONException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mRequestQueue.cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return true; // -> always yes
+            }
+        });
     }
 
 }
