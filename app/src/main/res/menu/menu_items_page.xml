@@ -13,7 +13,10 @@
 
     <item
         android:id="@+id/menuSettings"
-        android:title="Settings" />
+        android:title="Sync"
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/menuLogout"

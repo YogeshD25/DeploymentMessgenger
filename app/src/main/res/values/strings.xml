@@ -16,15 +16,15 @@
     <string name="error_invalid_password">Please enter a minimum password of 6 characters</string>
     <string name="main_menu_message">This is main Menu page</string>
     <!--    Deployment Details-->
-    <string name="str_deployment_no">Deployment Number</string>
-    <string name="str_rfcno">RFC Sequence No</string>
-    <string name="str_requester_name">Requester Name</string>
-    <string name="str_requester_manager">Requester Manager</string>
-    <string name="str_application_url">Application URL</string>
-    <string name="str_created_date">Created Date</string>
-    <string name="str_uat_approval_name">UAT Approval Name</string>
-    <string name="str_project_name">Project Name</string>
-    <string name="str_deployment_type">Deployment Type</string>
-    <string name="str_srn_no">SRN No</string>
-    <string name="str_version_no">Version No</string>
+    <string name="str_deployment_no">Deployment Number:</string>
+    <string name="str_rfcno">RFC Sequence No:</string>
+    <string name="str_requester_name">Requester Name: </string>
+    <string name="str_requester_manager">Requester Manager:</string>
+    <string name="str_application_url">Application URL:</string>
+    <string name="str_created_date">Created Date:</string>
+    <string name="str_uat_approval_name">UAT Approval Name:</string>
+    <string name="str_project_name">Project Name:</string>
+    <string name="str_deployment_type">Deployment Type:</string>
+    <string name="str_srn_no">SRN No:</string>
+    <string name="str_version_no">Version No:</string>
 </resources>

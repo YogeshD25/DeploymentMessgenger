@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.neml.deploymentaapproval.Database.AppPreference;
 import com.neml.deploymentaapproval.Logger.Logg;
 import com.neml.deploymentaapproval.Model.ModelNotificationList;
+import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
 import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
@@ -85,8 +86,7 @@ public class DeploymentDetails extends AppCompatActivity {
                 break;
 
             case R.id.menuSettings:
-                Intent intentSetting = new Intent(DeploymentDetails.this,SettingActivity.class);
-                startActivity(intentSetting);
+                NetworkUtils.postConnectionSpecific(DeploymentDetails.this,Constants.UrlLinks.details,"",appPreference.getUserID());
                 break;
 
             case R.id.menuLogout:

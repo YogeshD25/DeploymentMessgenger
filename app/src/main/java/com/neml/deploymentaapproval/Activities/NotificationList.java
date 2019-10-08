@@ -1,13 +1,18 @@
 package com.neml.deploymentaapproval.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -50,6 +55,10 @@ public class NotificationList extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Notification List");
+        setSupportActionBar(toolbar);
         initUI();
        // postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
     }
@@ -129,7 +138,7 @@ public class NotificationList extends AppCompatActivity {
                 hidepDialog();
                 error.printStackTrace();
                 Logg.d(error.toString());
-                Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
                 //TODO: handle failure
             }
         });
@@ -144,6 +153,42 @@ public class NotificationList extends AppCompatActivity {
     private void hidepDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_items_page, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.menuAbout:
+                Intent intentAbout = new Intent(NotificationList.this,AboutActivity.class);
+                startActivity(intentAbout);
+                break;
+
+            case R.id.menuSettings:
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                break;
+
+            case R.id.menuLogout:
+                appPreference.setUserID(null);
+                appPreference.setPassword(null);
+                appPreference.setloginDone(false);
+                Intent intentLogin = new Intent(NotificationList.this,MainActivity.class);
+                intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intentLogin);
+                break;
+
+            case  R.id.menuNotification:
+                Intent intent = new Intent(NotificationList.this,NotificationList.class);
+                startActivity(intent);
+
+        }
+        return true;
     }
 
 

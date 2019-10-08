@@ -15,29 +15,31 @@
         android:background="@color/colorPrimaryDark">
     </androidx.appcompat.widget.Toolbar>
 
-       <RelativeLayout
-           android:visibility="gone"
-           android:layout_height="wrap_content"
-           android:layout_width="match_parent"
-           android:minHeight="100dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
 
-           <ImageView
-               android:id="@+id/imgView"
-               android:layout_width="200dp"
-               android:layout_height="200dp"
-               android:background="@drawable/neml" />
-           <TextView
-               android:text="The Production Details Title"
-               android:padding="@dimen/large_padding"
-               android:layout_centerVertical="true"
-               android:gravity="center"
-               android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-               android:layout_toRightOf="@+id/imgView"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"/>
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/neml" />
 
-       </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imgView"
+            android:gravity="center"
+            android:padding="@dimen/large_padding"
+            android:text="Details of Deployment"
+            android:textColor="#000000"
+            android:textAllCaps="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+          />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -48,34 +50,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/height_component"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="0.6"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/standard_padding"
-                        android:text="@string/str_deployment_no"
-                        android:textColor="@color/blackColor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                    <TextView
-                        android:id="@+id/deploymentNo"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/height_component"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1.4"
-                        android:paddingLeft="10dp"
-                        android:singleLine="true"
-                        android:text="hjsgdshag"
-                        android:textColor="@color/blackColor" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_component"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/standard_padding"
+                    android:text="@string/str_deployment_no"
+                    android:textColor="@color/blackColor" />
+
+                <TextView
+                    android:id="@+id/deploymentNo"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_component"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:text="Deployment NO"
+                    android:textColor="@color/blackColor" />
+            </LinearLayout>
 
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
 
@@ -105,9 +108,9 @@
                     android:layout_height="@dimen/height_component"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1.4"
-                    android:text="jdfgjkdghf"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
+                    android:text="jdfgjkdghf"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
@@ -138,9 +141,9 @@
                     android:layout_height="@dimen/height_component"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1.4"
-                    android:text="sakjfhasdjg"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
+                    android:text="ReqesterName"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
@@ -232,7 +235,7 @@
                 <TextView
                     android:id="@+id/createdDate"
                     android:layout_width="0dp"
-                  android:layout_height="@dimen/height_component"
+                    android:layout_height="@dimen/height_component"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1.4"
                     android:paddingLeft="10dp"
@@ -340,6 +343,7 @@
                     android:text="jasgjkashdkjah"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/nineLayout"
                 android:layout_width="match_parent"
@@ -372,6 +376,7 @@
                     android:text="hsagjdjhagsdjh"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/tenLayout"
                 android:layout_width="match_parent"
@@ -404,44 +409,43 @@
                     android:text="jashdkajshd"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
-        <LinearLayout
-            android:id="@+id/elevenLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-            <Button
-                android:id="@+id/approve"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height_component"
-                android:layout_marginTop="30dp"
-                android:background="@color/lightgreen"
-                android:text="Approve"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/large_padding"
-                android:textColor="@color/blackColor" />
-            <Button
-                android:id="@+id/reject"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/height_component"
-                android:layout_marginTop="30dp"
-                android:layout_weight="1"
-                android:background="@color/lightgreen"
-                android:layout_margin="@dimen/large_padding"
-                android:text="Reject"
-                android:textColor="@color/blackColor" />
-        </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/elevenLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/approve"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_component"
+                    android:layout_margin="@dimen/large_padding"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_gradient"
+                    android:text="Approve"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/reject"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_component"
+                    android:layout_margin="@dimen/large_padding"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_gradient"
+                    android:text="Reject"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
 
         </LinearLayout>
     </ScrollView>
-
-
-
-
-
 
 
 </LinearLayout>

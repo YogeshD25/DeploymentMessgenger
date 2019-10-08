@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,6 +44,7 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
     ArrayList<ModelDisplayDetails> deploymentList;
     ArrayList<ModelNotificationList> notificationListArrayList;
     ModelNotificationList modelNotificationList;
+    TextView title;
     AppPreference appPreference;
     private ProgressDialog pDialog;
 
@@ -84,8 +86,7 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
                 break;
 
             case R.id.menuSettings:
-                Intent intentSetting = new Intent(MenuActivity.this,SettingActivity.class);
-                startActivity(intentSetting);
+               // postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
                 break;
 
             case R.id.menuLogout:
@@ -106,6 +107,8 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     private void initUI() {
+        title =  findViewById(R.id.titleText);
+        title.setText("WELCOME "+appPreference.getUserID());
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -182,7 +185,7 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
                 hidepDialog();
                 error.printStackTrace();
                 Logg.d(error.toString());
-                Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
                 //TODO: handle failure
             }
         });
