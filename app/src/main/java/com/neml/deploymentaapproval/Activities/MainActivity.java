@@ -64,7 +64,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SetValidation();
-                //postLogin(MainActivity.this, Constants.UrlLinks.login, email.getText().toString(), passWord.getText().toString());
+                if(utils.isNetworkAvailable(MainActivity.this)){
+                    //postLogin(MainActivity.this, Constants.UrlLinks.login, email.getText().toString(), passWord.getText().toString());
+                }else{
+                    utils.getSimpleDialog(MainActivity.this,getResources().getString(R.string.app_name),"Internet not Available").show();
+                }
+
                 appPreference.setloginDone(true);
                 appPreference.setUserID(email.getText().toString());
                 appPreference.setPassword(passWord.getText().toString());

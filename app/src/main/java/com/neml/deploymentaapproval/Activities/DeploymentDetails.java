@@ -66,7 +66,12 @@ public class DeploymentDetails extends AppCompatActivity {
         approve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postApprove(DeploymentDetails.this, Constants.UrlLinks.approve,"000014",appPreference.getUserID());
+                if(utils.isNetworkAvailable(DeploymentDetails.this)){
+                    postApprove(DeploymentDetails.this, Constants.UrlLinks.approve,modelNotificationList.getDeploymentNo(),appPreference.getUserID());
+                }else{
+                    utils.getSimpleDialog(DeploymentDetails.this,getResources().getString(R.string.app_name),"Internet not Available").show();
+                }
+
             }
         });
     }
@@ -86,7 +91,12 @@ public class DeploymentDetails extends AppCompatActivity {
                 break;
 
             case R.id.menuSettings:
-                NetworkUtils.postConnectionSpecific(DeploymentDetails.this,Constants.UrlLinks.details,"",appPreference.getUserID());
+                if(utils.isNetworkAvailable(DeploymentDetails.this)){
+                    NetworkUtils.postConnectionSpecific(DeploymentDetails.this,Constants.UrlLinks.details,"",appPreference.getUserID());
+                }else{
+                    utils.getSimpleDialog(DeploymentDetails.this,getResources().getString(R.string.app_name),"Internet not Available").show();
+                }
+
                 break;
 
             case R.id.menuLogout:

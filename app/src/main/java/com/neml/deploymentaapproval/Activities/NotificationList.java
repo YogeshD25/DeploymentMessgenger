@@ -29,6 +29,7 @@ import com.neml.deploymentaapproval.Model.ModelNotificationListItem;
 import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
+import com.neml.deploymentaapproval.Utils.utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -171,7 +172,12 @@ public class NotificationList extends AppCompatActivity {
                 break;
 
             case R.id.menuSettings:
-                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                if(utils.isNetworkAvailable(NotificationList.this)){
+                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                }else{
+                    utils.getSimpleDialog(NotificationList.this,getResources().getString(R.string.app_name),"Internet not Available").show();
+                }
+
                 break;
 
             case R.id.menuLogout:

@@ -29,6 +29,7 @@ import com.neml.deploymentaapproval.Logger.*;
 import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
+import com.neml.deploymentaapproval.Utils.utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -86,7 +87,11 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
                 break;
 
             case R.id.menuSettings:
-               // postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                if(utils.isNetworkAvailable(MenuActivity.this)){
+                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                }else{
+                    utils.getSimpleDialog(MenuActivity.this,getResources().getString(R.string.app_name),"Internet not Available").show();
+                }
                 break;
 
             case R.id.menuLogout:

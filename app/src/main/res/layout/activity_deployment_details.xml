@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightGrey"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".Activities.DeploymentDetails">
     <androidx.appcompat.widget.Toolbar
@@ -36,7 +36,7 @@
             android:text="Details of Deployment"
             android:textColor="#000000"
             android:textAllCaps="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
           />
 
     </RelativeLayout>
