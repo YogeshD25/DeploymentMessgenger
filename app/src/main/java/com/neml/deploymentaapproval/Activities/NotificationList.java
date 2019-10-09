@@ -26,6 +26,7 @@ import com.neml.deploymentaapproval.Logger.Logg;
 import com.neml.deploymentaapproval.Model.ModelDisplayDetails;
 import com.neml.deploymentaapproval.Model.ModelNotificationList;
 import com.neml.deploymentaapproval.Model.ModelNotificationListItem;
+import com.neml.deploymentaapproval.NetworkUtils.HttpsTrustManager;
 import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
@@ -51,14 +52,14 @@ public class NotificationList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_list);
         appPreference = new AppPreference(this);
-        modelNotificationList =  new ModelNotificationList();
         notifyItemList = new ArrayList<>();
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
+        HttpsTrustManager.allowAllSSL();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Notification List");
+        toolbar.setTitle("NOTIFICATION LIST");
         setSupportActionBar(toolbar);
         initUI();
        // postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
@@ -68,24 +69,13 @@ public class NotificationList extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        notifyItemList.add(new ModelNotificationList("12321312"));
-        notifyItemList.add(new ModelNotificationList("12321312"));
-        notifyItemList.add(new ModelNotificationList("12321312"));
-        notifyItemList.add(new ModelNotificationList("12321312"));
-        notifyItemList.add(new ModelNotificationList("12321312"));
-        notifyItemList.add(new ModelNotificationList("12321312"));
-        notifyItemList.add(new ModelNotificationList("12321312"));
-
-
-        NotifyListAdapter adapter = new NotifyListAdapter(NotificationList.this, notifyItemList);
-        recyclerView.setAdapter(adapter);
     }
 
     public  void postConnectionNotificationList(final Context mContext, String url, final String userId, final String deploymentNo) {
         showpDialog();
         Map<String, String> params = new HashMap();
         params.put(Constants.postAttributeName.deploymentNo, "");
-        params.put(Constants.postAttributeName.userId, "NA");
+        params.put(Constants.postAttributeName.userId, userId);
         JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
             @Override
@@ -104,23 +94,26 @@ public class NotificationList extends AppCompatActivity {
                         String requesterName = jsonObj.getString("preparedBy");
                         String requesterManager = jsonObj.getString("approvedBy");
                         String applicationUrl = jsonObj.getString("projectUrl");
-                        String createdDate = jsonObj.getString("createdDate");
+                        String createdDate = jsonObj.getString("createdDateStr");
                         String uatApprovalName = jsonObj.getString("uatApprovar");
                         String projectName = jsonObj.getString("projectName");
+                        String isApproverApproved = jsonObj.getString("isApproverApproved");
                         String DeploymentType = jsonObj.getString("deploymentType");
                         String srnNo = jsonObj.getString("srnNo");
                         String versionno = jsonObj.getString("versionNo");
+                        modelNotificationList =  new ModelNotificationList();
 
                         modelNotificationList.setDeploymentNo(DeploymentNo);
                         modelNotificationList.setRfcNo(rfcSeqNo);
                         modelNotificationList.setPreparedBy(requesterName);
                         modelNotificationList.setApprovedBy(requesterManager);
                         modelNotificationList.setProjectUrl("ABCD");
-                        modelNotificationList.setCreatedDate("ABCD");
+                        modelNotificationList.setCreatedDate(createdDate);
                         modelNotificationList.setUatApprovar(uatApprovalName);
-                        modelNotificationList.setProjectName("ABCD");
+                        modelNotificationList.setProjectName(projectName);
                         modelNotificationList.setDeploymentType(DeploymentType);
                         modelNotificationList.setSrnNo(srnNo);
+                        modelNotificationList.setIsArroverApproved(isApproverApproved);
                         modelNotificationList.setVersionNo(versionno);
 
                         notifyItemList.add(modelNotificationList);
@@ -173,7 +166,7 @@ public class NotificationList extends AppCompatActivity {
 
             case R.id.menuSettings:
                 if(utils.isNetworkAvailable(NotificationList.this)){
-                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
                 }else{
                     utils.getSimpleDialog(NotificationList.this,getResources().getString(R.string.app_name),"Internet not Available").show();
                 }
@@ -197,5 +190,20 @@ public class NotificationList extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onStart() {
+        if(utils.isNetworkAvailable(NotificationList.this)){
+            if(notifyItemList.isEmpty()){
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+            }else{
+                notifyItemList.clear();
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+            }
+        }else{
+            utils.getSimpleDialog(NotificationList.this,"Deployment Approval","Internet not Available").show();
+        }
+
+        super.onStart();
+    }
 
 }

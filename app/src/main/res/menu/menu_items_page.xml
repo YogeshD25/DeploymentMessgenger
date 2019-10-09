@@ -9,10 +9,12 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menuAbout"
+        android:visible="false"
         android:title="About" />
 
     <item
         android:id="@+id/menuSettings"
+        android:visible="false"
         android:title="Sync"
         android:icon="@drawable/ic_sync_black_24dp"
         android:orderInCategory="100"

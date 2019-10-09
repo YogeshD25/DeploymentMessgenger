@@ -23,9 +23,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;;
 import com.neml.deploymentaapproval.Adapters.DeploymentAdapter;
 import com.neml.deploymentaapproval.Database.AppPreference;
-import com.neml.deploymentaapproval.Model.ModelDisplayDetails;
+import com.neml.deploymentaapproval.FCMConnection.FCMTokenReceiver;
 import com.neml.deploymentaapproval.Model.ModelNotificationList;
 import com.neml.deploymentaapproval.Logger.*;
+import com.neml.deploymentaapproval.NetworkUtils.HttpsTrustManager;
 import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
@@ -42,7 +43,6 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
 
     GestureDetector gestureDetector;
     RecyclerView recyclerView;
-    ArrayList<ModelDisplayDetails> deploymentList;
     ArrayList<ModelNotificationList> notificationListArrayList;
     ModelNotificationList modelNotificationList;
     TextView title;
@@ -53,22 +53,24 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        sendFcmRegistrationToken();
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
 
         appPreference = new AppPreference(this);
-        modelNotificationList = new ModelNotificationList();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Deployment Approval");
         setSupportActionBar(toolbar);
+        HttpsTrustManager.allowAllSSL();
 
         initUI();
 
-        notificationListArrayList = new ArrayList<>();
-        //postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"")
+        notificationListArrayList = new ArrayList<ModelNotificationList>();
+        //postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
 
     }
     @Override
@@ -117,13 +119,14 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        notificationListArrayList = new ArrayList<>();
-        notificationListArrayList.add(new ModelNotificationList("123217"));
-        notificationListArrayList.add(new ModelNotificationList("908778"));
-        notificationListArrayList.add(new ModelNotificationList("354321"));
-        notificationListArrayList.add(new ModelNotificationList("768321"));
-        DeploymentAdapter adapter = new DeploymentAdapter(MenuActivity.this, notificationListArrayList);
-        recyclerView.setAdapter(adapter);
+//        notificationListArrayList.add(new ModelNotificationList("123217"));
+//        notificationListArrayList.add(new ModelNotificationList("908778"));
+//        notificationListArrayList.add(new ModelNotificationList("354321"));
+//        notificationListArrayList.add(new ModelNotificationList("768321"));
+//        DeploymentAdapter adapter = new DeploymentAdapter(MenuActivity.this, notificationListArrayList);
+//        recyclerView.setAdapter(adapter);
+
+
 
     }
 
@@ -136,7 +139,7 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
         showpDialog();
         Map<String, String> params = new HashMap();
         params.put(Constants.postAttributeName.deploymentNo, "");
-        params.put(Constants.postAttributeName.userId, "NA");
+        params.put(Constants.postAttributeName.userId, userId);
         JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
             @Override
@@ -155,23 +158,26 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
                         String requesterName = jsonObj.getString("preparedBy");
                         String requesterManager = jsonObj.getString("approvedBy");
                         String applicationUrl = jsonObj.getString("projectUrl");
-                        String createdDate = jsonObj.getString("createdDate");
+                        String createdDate = jsonObj.getString("createdDateStr");
                         String uatApprovalName = jsonObj.getString("uatApprovar");
                         String projectName = jsonObj.getString("projectName");
+                        String isApproverApproved = jsonObj.getString("isApproverApproved");
                         String DeploymentType = jsonObj.getString("deploymentType");
                         String srnNo = jsonObj.getString("srnNo");
                         String versionno = jsonObj.getString("versionNo");
 
+                        modelNotificationList = new ModelNotificationList();
                         modelNotificationList.setDeploymentNo(DeploymentNo);
                         modelNotificationList.setRfcNo(rfcSeqNo);
                         modelNotificationList.setPreparedBy(requesterName);
                         modelNotificationList.setApprovedBy(requesterManager);
                         modelNotificationList.setProjectUrl("ABCD");
-                        modelNotificationList.setCreatedDate("ABCD");
+                        modelNotificationList.setCreatedDate(createdDate);
                         modelNotificationList.setUatApprovar(uatApprovalName);
-                        modelNotificationList.setProjectName("ABCD");
+                        modelNotificationList.setProjectName(projectName);
                         modelNotificationList.setDeploymentType(DeploymentType);
                         modelNotificationList.setSrnNo(srnNo);
+                        modelNotificationList.setIsArroverApproved(isApproverApproved);
                         modelNotificationList.setVersionNo(versionno);
 
                         notificationListArrayList.add(modelNotificationList);
@@ -224,12 +230,12 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onScroll(MotionEvent motionEvent1, MotionEvent motionEvent2, float v, float v1) {
         if(motionEvent1.getY() - motionEvent2.getY() > 50){
-            postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+           // postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
             return true;
         }
 
         if(motionEvent2.getY() - motionEvent1.getY() > 50){
-            postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+           // postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
             return true;
         }
 
@@ -256,12 +262,12 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onFling(MotionEvent motionEvent1, MotionEvent motionEvent2, float X, float Y) {
 
         if(motionEvent1.getY() - motionEvent2.getY() > 50){
-            postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+            //postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
             return true;
         }
 
         if(motionEvent2.getY() - motionEvent1.getY() > 50){
-            postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+            //postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
             return true;
         }
 
@@ -275,5 +281,25 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
         else {
             return true ;
         }
+    }
+    private void sendFcmRegistrationToken() {
+        Intent intent = new Intent(this, FCMTokenReceiver.class);
+        startService(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        if(utils.isNetworkAvailable(MenuActivity.this)){
+            if(notificationListArrayList.isEmpty()){
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+            }else{
+                notificationListArrayList.clear();
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+            }
+        }else{
+            utils.getSimpleDialog(MenuActivity.this,"Deployment Approval","Internet not Available").show();
+        }
+
+        super.onStart();
     }
 }

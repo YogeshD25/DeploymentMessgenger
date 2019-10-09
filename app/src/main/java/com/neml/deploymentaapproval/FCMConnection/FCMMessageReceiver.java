@@ -17,7 +17,6 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.neml.deploymentaapproval.Activities.NotificationList;
 import com.neml.deploymentaapproval.Logger.Logg;
-import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
 
@@ -43,16 +42,14 @@ public class FCMMessageReceiver extends FirebaseMessagingService {
         Intent intent = new Intent(getApplicationContext(), NotificationList.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"MyNotification")
-                .setContentTitle(title)
-                .setSmallIcon(R.drawable.common_google_signin_btn_text_disabled)
+                .setContentTitle("Deployment No: "+ title)
+                .setSmallIcon(R.drawable.shrot_logo)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
-                .setContentText(message)
-                .setContentInfo(applicatioName)
+                .setContentText("Application Name: "+applicatioName)
+                .setContentInfo("Version No: "+message)
                 .setSubText("Tap to open App")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Deployment Messenger"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);

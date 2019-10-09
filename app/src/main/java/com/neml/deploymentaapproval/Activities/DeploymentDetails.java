@@ -3,6 +3,7 @@ package com.neml.deploymentaapproval.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +21,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.neml.deploymentaapproval.Database.AppPreference;
+import com.neml.deploymentaapproval.Listerner.AlertDialogListerner;
 import com.neml.deploymentaapproval.Logger.Logg;
 import com.neml.deploymentaapproval.Model.ModelNotificationList;
+import com.neml.deploymentaapproval.NetworkUtils.HttpsTrustManager;
 import com.neml.deploymentaapproval.NetworkUtils.NetworkUtils;
 import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
@@ -34,8 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DeploymentDetails extends AppCompatActivity {
-    private TextView deploymentNo, rfcSeqno, requesterName, requestermanager,
-    applicationurl, createdDate, uatApprovalName, projectName, deploymentType, srnNo, versionNo;
+    private TextView deploymentNo, rfcSeqno, requesterName, requestermanager, feedback,
+    createdDate, uatApprovalName, projectName, deploymentType, srnNo, versionNo;
 
     private Button approve, reject;
     Bundle bundle;
@@ -49,8 +52,9 @@ public class DeploymentDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deployment_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Deployment Details");
+        toolbar.setTitle("DEPLOYMENT DETAILS");
         setSupportActionBar(toolbar);
+        HttpsTrustManager.allowAllSSL();
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -78,7 +82,7 @@ public class DeploymentDetails extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_items_page, menu);
+        menuInflater.inflate(R.menu.menu_details, menu);
         return true;
     }
     @Override
@@ -90,14 +94,6 @@ public class DeploymentDetails extends AppCompatActivity {
                 startActivity(intentAbout);
                 break;
 
-            case R.id.menuSettings:
-                if(utils.isNetworkAvailable(DeploymentDetails.this)){
-                    NetworkUtils.postConnectionSpecific(DeploymentDetails.this,Constants.UrlLinks.details,"",appPreference.getUserID());
-                }else{
-                    utils.getSimpleDialog(DeploymentDetails.this,getResources().getString(R.string.app_name),"Internet not Available").show();
-                }
-
-                break;
 
             case R.id.menuLogout:
                 appPreference.setUserID(null);
@@ -108,9 +104,6 @@ public class DeploymentDetails extends AppCompatActivity {
                 startActivity(intentLogin);
                 break;
 
-            case  R.id.menuNotification:
-                Intent intent = new Intent(DeploymentDetails.this,NotificationList.class);
-                startActivity(intent);
 
         }
         return true;
@@ -120,31 +113,35 @@ public class DeploymentDetails extends AppCompatActivity {
 
     private void setFields() {
         deploymentNo.setText(modelNotificationList.getDeploymentNo());
-        rfcSeqno.setText(modelNotificationList.getRfcSeqNo());
         requesterName.setText(modelNotificationList.getPreparedBy());
         requestermanager.setText(modelNotificationList.getApprovedBy());
-        applicationurl.setText("ANCD");
-        createdDate.setText(modelNotificationList.getCreatedDate());
+        createdDate.setText(modelNotificationList.getCreatedDate().substring(0,11));
         uatApprovalName.setText(modelNotificationList.getUatApprovar());
-        projectName.setText("ABCD");
+        projectName.setText(modelNotificationList.getProjectName());
         deploymentType.setText(modelNotificationList.getDeploymentType());
         srnNo.setText(modelNotificationList.getSrnNo());
         versionNo.setText(modelNotificationList.getVersionNo());
+        if(modelNotificationList.getIsArroverApproved().equalsIgnoreCase("Y")){
+            approve.setVisibility(View.GONE);
+            feedback.setVisibility(View.VISIBLE);
+            feedback.setText("Deployment Already Approved");
+        }else{
+            approve.setVisibility(View.VISIBLE);
+        }
 
     }
 
     private void initUI() {
         deploymentNo = findViewById(R.id.deploymentNo);
-        rfcSeqno = findViewById(R.id.rfcSeqNo);
         requesterName = findViewById(R.id.requesterName);
         requestermanager = findViewById(R.id.requesterManager);
-        applicationurl = findViewById(R.id.applicationUrl);
         createdDate = findViewById(R.id.createdDate);
         uatApprovalName = findViewById(R.id.uatApproval);
         projectName = findViewById(R.id.projectName);
         deploymentType = findViewById(R.id.deploymentType);
         srnNo = findViewById(R.id.srnNo);
         versionNo = findViewById(R.id.versionNo);
+        feedback = findViewById(R.id.feedbak);
 
         approve = findViewById(R.id.approve);
         reject = findViewById(R.id.reject);
@@ -167,8 +164,14 @@ public class DeploymentDetails extends AppCompatActivity {
                         Logg.d(response.toString());
                         if(response!=null){
                             String status = response.getString("status");
-                            if(status.equalsIgnoreCase("Success")){
-                                utils.getSimpleDialog(mContext,response.getString("status")).show();
+                            if(status.equalsIgnoreCase("Deployment Approved Successfully")){
+                                utils.getSimpleDialog(mContext, response.getString("status"), new AlertDialogListerner() {
+                                    @Override
+                                    public void onConfirmed(boolean f_isActionConfirmed) {
+                                        finish();
+                                    }
+                                }).show();
+
                             }else{
                                 utils.getSimpleDialog(mContext,response.getString("status")).show();
                             }
@@ -186,6 +189,7 @@ public class DeploymentDetails extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     hidepDialog();
                     error.printStackTrace();
+                    Logg.d(error.toString());
                     utils.getSimpleDialog(mContext,error.getMessage().toString()).show();
                     //TODO: handle failure
                 }

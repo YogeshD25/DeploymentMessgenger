@@ -98,6 +98,21 @@ public class ModelNotificationList implements Serializable {
     private List<Object> descList = null;
     @SerializedName("bugList")
     @Expose
+
+
+    private String isArroverApproved = "";
+
+    public String getIsArroverApproved() {
+        return isArroverApproved;
+    }
+
+    public void setIsArroverApproved(String isArroverApproved) {
+        this.isArroverApproved = isArroverApproved;
+    }
+
+    @SerializedName("isApproverApproved")
+    @Expose
+
     private List<Object> bugList = null;
 
     public String getProjectName() {

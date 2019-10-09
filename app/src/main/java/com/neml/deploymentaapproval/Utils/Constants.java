@@ -4,12 +4,12 @@ public class Constants {
 
 
     public interface UrlLinks{
-        public static String login = "http://172.22.22.12:8080/NeMLDeploymentTracker/login/validateUserAndroid";
+        public static String login = "https://deploymenttracker.neml.xyz/NeMLDeploymentTracker/login/validateUserAndroid";
         public static String signIn = "";
-        public static String details = "http://172.22.22.12:8080/NeMLDeploymentTracker/DeploymentCtrl/getDeploymentDetailsAndroid";
-        public static String approve = "http://172.22.22.12:8080/NeMLDeploymentTracker/DeploymentCtrl/approveDeployment ";
+        public static String details = "https://deploymenttracker.neml.xyz/NeMLDeploymentTracker/DeploymentCtrl/getDeploymentDetailsAndroid";
+        public static String approve = "https://deploymenttracker.neml.xyz/NeMLDeploymentTracker/DeploymentCtrl/approveDeployment ";
         public static String reject = "";
-        public static String sendToken = "http://172.22.22.12:8080/NeMLDeploymentTracker/DeploymentCtrl/updateToken";
+        public static String sendToken = "https://deploymenttracker.neml.xyz/NeMLDeploymentTracker/DeploymentCtrl/updateToken";
 
     }
     public interface postAttributeName{

@@ -35,6 +35,7 @@ import java.util.Map;
 
 import com.neml.deploymentaapproval.Database.AppPreference;
 import com.neml.deploymentaapproval.Logger.Logg;
+import com.neml.deploymentaapproval.NetworkUtils.HttpsTrustManager;
 import com.neml.deploymentaapproval.NetworkUtils.SingleRequestQueue;
 import com.neml.deploymentaapproval.R;
 import com.neml.deploymentaapproval.Utils.Constants;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        HttpsTrustManager.allowAllSSL();
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
@@ -65,16 +67,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SetValidation();
                 if(utils.isNetworkAvailable(MainActivity.this)){
-                    //postLogin(MainActivity.this, Constants.UrlLinks.login, email.getText().toString(), passWord.getText().toString());
+                    postLogin(MainActivity.this, Constants.UrlLinks.login, email.getText().toString(), passWord.getText().toString());
                 }else{
                     utils.getSimpleDialog(MainActivity.this,getResources().getString(R.string.app_name),"Internet not Available").show();
                 }
 
-                appPreference.setloginDone(true);
-                appPreference.setUserID(email.getText().toString());
-                appPreference.setPassword(passWord.getText().toString());
-                Intent intent =  new Intent(MainActivity.this,MenuActivity.class);
-                startActivity(intent);
+//                appPreference.setloginDone(true);
+//                appPreference.setUserID(email.getText().toString());
+//                appPreference.setPassword(passWord.getText().toString());
+//                Intent intent =  new Intent(MainActivity.this,MenuActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -193,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
                 error.printStackTrace();
-                Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
+                Logg.d(error.toString());
                 utils.getSimpleDialog(mContext,error.getMessage().toString()).show();
                 //TODO: handle failure
             }

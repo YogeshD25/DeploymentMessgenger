@@ -1,5 +1,6 @@
 package com.neml.deploymentaapproval.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,9 +40,9 @@ public class NotifyListAdapter extends RecyclerView.Adapter<NotifyListAdapter.No
     public void onBindViewHolder(NotifyListViewHolder holder, int position) {
         final ModelNotificationList notify = notifyList.get(position);
         holder.textApplication.setText(notify.getProjectName());
-        holder.textReleaseType.setText(notify.getReviewBy());
+        holder.textReleaseType.setText(notify.getDeploymentNo());
         holder.textVersion.setText(String.valueOf(notify.getVersionNo()));
-        holder.textReleaseinfo.setText(String.valueOf(notify.getPreparedBy()));
+        holder.textReleaseinfo.setText(String.valueOf(notify.getProjectName()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +51,8 @@ public class NotifyListAdapter extends RecyclerView.Adapter<NotifyListAdapter.No
                 b.putSerializable("serialzable",notify);
                 send.putExtras(b);
                 context.startActivity(send);
+                ((Activity)context).finish();
+
             }
         });
 

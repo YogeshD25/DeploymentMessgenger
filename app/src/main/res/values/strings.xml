@@ -10,7 +10,7 @@
     <string name="register">Register</string>
     <string name="name_error">Please enter your name</string>
     <string name="phone_error">Please enter your phone number</string>
-    <string name="email_error">Please enter your email address</string>
+    <string name="email_error">Please enter your User id</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="password_error">Please enter a password</string>
     <string name="error_invalid_password">Please enter a minimum password of 6 characters</string>

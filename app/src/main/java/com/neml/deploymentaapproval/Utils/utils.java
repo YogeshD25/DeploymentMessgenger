@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.neml.deploymentaapproval.Database.AppPreference;
+import com.neml.deploymentaapproval.Listerner.AlertDialogListerner;
 import com.neml.deploymentaapproval.R;
 
 public class utils {
@@ -55,6 +56,23 @@ public class utils {
             }
         });
         return builder.create();
+    }
+    public static AlertDialog getSimpleDialog(Context context, String message, final AlertDialogListerner listener) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(false);
+        alertBuilder.setIcon(R.drawable.neml);
+        alertBuilder.setMessage(message);
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                listener.onConfirmed(true);
+            }
+        });
+
+
+        final AlertDialog alertDialog = alertBuilder.create();
+        return alertDialog;
     }
 
 

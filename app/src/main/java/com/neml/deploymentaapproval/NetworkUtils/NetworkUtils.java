@@ -44,9 +44,9 @@ public class NetworkUtils {
                     try {
                         if(response!=null){
                             Logg.d(response.toString());
-                            Toast.makeText(mContext, response.getString("status"), Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(mContext, response.getString("status"), Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(mContext, "Null Response", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(mContext, "Null Response", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (Exception e) {
@@ -57,7 +57,7 @@ public class NetworkUtils {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
-                    Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
                     //TODO: handle failure
                 }
             });

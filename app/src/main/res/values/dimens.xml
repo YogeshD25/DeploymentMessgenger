@@ -10,6 +10,6 @@
         <dimen name="standard_text">20dp</dimen>
         <dimen name="small_text">10dp</dimen>
         <dimen name="large_text">30dp</dimen>
-        <dimen name="height_component">50dp</dimen>
+        <dimen name="height_component">35dp</dimen>
 
 </resources>

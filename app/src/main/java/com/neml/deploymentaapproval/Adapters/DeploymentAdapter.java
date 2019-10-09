@@ -41,11 +41,9 @@ public DeploymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     public void onBindViewHolder(DeploymentViewHolder holder, int position) {
         final ModelNotificationList deployment = deploymentList.get(position);
         holder.textDeploymentNo.setText(deployment.getDeploymentNo());
-        holder.textRFCseqno.setText(deployment.getRfcSeqNo());
         holder.textRequesterName.setText(String.valueOf(deployment.getPreparedBy()));
         holder.textRequestermanager.setText(String.valueOf(deployment.getApprovedBy()));
-        holder.textApplicationURL.setText(String.valueOf(deployment.getProjectUrl()));
-        holder.textCreatedDate.setText(String.valueOf(deployment.getCreatedDate()));
+        holder.textCreatedDate.setText(String.valueOf(deployment.getCreatedDate().substring(0,22)));
         holder.textUatApprovalName.setText(String.valueOf(deployment.getUatApprovar()));
         holder.textProjectName.setText(String.valueOf(deployment.getProjectName()));
         holder.textDeploymentType.setText(String.valueOf(deployment.getDeploymentType()));
@@ -82,10 +80,8 @@ public DeploymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         super(itemView);
 
         textDeploymentNo = itemView.findViewById(R.id.textDeploymentNo);
-        textRFCseqno = itemView.findViewById(R.id.textRFCseqno);
         textRequesterName = itemView.findViewById(R.id.textRequesterName);
         textRequestermanager = itemView.findViewById(R.id.textRequestermanager);
-        textApplicationURL = itemView.findViewById(R.id.textApplicationURL);
         textCreatedDate = itemView.findViewById(R.id.textCreatedDate);
         textUatApprovalName = itemView.findViewById(R.id.textUatApprovalName);
         textProjectName = itemView.findViewById(R.id.textProjectName);

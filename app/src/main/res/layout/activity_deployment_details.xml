@@ -18,7 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imgView"
@@ -36,7 +36,8 @@
             android:text="Details of Deployment"
             android:textColor="#000000"
             android:textAllCaps="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
           />
 
     </RelativeLayout>
@@ -61,58 +62,30 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/standard_padding"
                     android:text="@string/str_deployment_no"
-                    android:textColor="@color/blackColor" />
+                    android:textColor="@color/blackColor"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    />
 
                 <TextView
                     android:id="@+id/deploymentNo"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="Deployment NO"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
 
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
 
-            <LinearLayout
-                android:id="@+id/secondLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
 
-                <!-- place one TextView and one EditText inside layout using weight property -->
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:text="@string/str_rfcno"
-                    android:textColor="@color/blackColor" />
-
-                <TextView
-                    android:id="@+id/rfcSeqNo"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
-                    android:paddingLeft="10dp"
-                    android:singleLine="true"
-                    android:text="jdfgjkdghf"
-                    android:textColor="@color/blackColor" />
-            </LinearLayout>
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
 
             <LinearLayout
@@ -128,22 +101,24 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_requester_name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/requesterName"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="ReqesterName"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
@@ -161,55 +136,26 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_requester_manager"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/requesterManager"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:paddingLeft="10dp"
-                    android:singleLine="true"
-                    android:text="skjfdhkdjhksjdh"
-                    android:textColor="@color/blackColor" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <!-- place one TextView and one EditText inside layout using weight property -->
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
                     android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:text="@string/str_application_url"
-                    android:textColor="@color/blackColor" />
-
-                <TextView
-                    android:id="@+id/applicationUrl"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
-                    android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="skjfdhkdjhksjdh"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
+
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
 
             <LinearLayout
@@ -225,22 +171,23 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_created_date"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/createdDate"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
+                    android:gravity="center_vertical"
                     android:text="asjfhksjdfh"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
@@ -258,22 +205,23 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_uat_approval_name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/uatApproval"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="jsgdfhdgfhj"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:gravity="center_vertical"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
             <!-- create a Linear Layout with horizontal orientation and weightSum property -->
@@ -291,23 +239,24 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_project_name"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/projectName"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:inputType="number"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="ashgdjshagdj"
+                    android:gravity="center_vertical"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
 
@@ -324,23 +273,25 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_deployment_type"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/deploymentType"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+
+                    android:layout_weight="1"
                     android:inputType="number"
+                    android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="jasgjkashdkjah"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
 
@@ -357,23 +308,24 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_srn_no"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/srnNo"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:inputType="number"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="hsagjdjhagsdjh"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:gravity="center_vertical"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
 
@@ -390,23 +342,24 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/str_version_no"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
 
                 <TextView
                     android:id="@+id/versionNo"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:inputType="number"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="jashdkajshd"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:gravity="center_vertical"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
 
@@ -414,16 +367,15 @@
                 android:id="@+id/elevenLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <Button
                     android:id="@+id/approve"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/height_component"
-                    android:layout_margin="@dimen/large_padding"
-                    android:layout_marginTop="30dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="@dimen/small_margin"
                     android:layout_weight="1"
                     android:background="@drawable/button_gradient"
                     android:text="Approve"
@@ -432,15 +384,38 @@
 
                 <Button
                     android:id="@+id/reject"
+                    android:visibility="gone"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/height_component"
-                    android:layout_margin="@dimen/large_padding"
-                    android:layout_marginTop="30dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="@dimen/small_margin"
                     android:layout_weight="1"
                     android:background="@drawable/button_gradient"
                     android:text="Reject"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/feedbak"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:layout_weight="2"
+                    android:background="@color/lightgreen"
+                    android:text="Approve"
+                    android:gravity="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="@color/blackColor"
+                    android:textSize="16sp" />
+
+
             </LinearLayout>
 
 

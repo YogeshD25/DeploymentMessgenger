@@ -45,32 +45,11 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textDeploymentNo"
-                android:layout_toLeftOf="@id/textRFCseqno"
-                android:layout_alignParentLeft="true"
-                android:text="RFC SEQO NO"
-                android:gravity="left"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="#000000"/>
-
-            <TextView
-                android:id="@+id/textRFCseqno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textDeploymentNo"
-                android:layout_marginLeft="5dp"
-
-                android:layout_toLeftOf="@id/imageView"
-                android:text="RFC SEQO NO "
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="#000000"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textRFCseqno"
                 android:layout_toLeftOf="@id/textRequesterName"
                 android:text="Requester Manager:"
                 android:layout_alignParentLeft="true"
@@ -81,7 +60,7 @@
                 android:id="@+id/textRequesterName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textRFCseqno"
+                android:layout_below="@id/textDeploymentNo"
                 android:layout_marginLeft="5dp"
 
                 android:layout_toLeftOf="@id/imageView"
@@ -110,30 +89,11 @@
                 android:textColor="#000000"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                  />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textRequestermanager"
-                android:layout_toLeftOf="@id/textApplicationURL"
-                android:text="Project URL: "
-                android:layout_alignParentLeft="true"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="#000000" />
-            <TextView
-                android:id="@+id/textApplicationURL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textRequestermanager"
-                android:layout_marginLeft="5dp"
-                android:layout_toLeftOf="@id/imageView"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:text="Project URL"
-                android:textColor="#000000"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textApplicationURL"
                 android:layout_toLeftOf="@id/textCreatedDate"
                 android:text="Created Date: "
                 android:layout_alignParentLeft="true"
@@ -143,7 +103,7 @@
                 android:id="@+id/textCreatedDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textApplicationURL"
+                android:layout_below="@id/textRequestermanager"
                 android:layout_marginLeft="5dp"
 
                 android:layout_toLeftOf="@id/imageView"
