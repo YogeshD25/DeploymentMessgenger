@@ -2,11 +2,13 @@ package com.neml.deploymentaapproval.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,6 +55,8 @@ public class DeploymentDetails extends AppCompatActivity {
         setContentView(R.layout.activity_deployment_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("DEPLOYMENT DETAILS");
+        toolbar.setTitleTextColor(Color.WHITE);
+        ResourcesCompat.getColor(getResources(), R.color.white, null);
         setSupportActionBar(toolbar);
         HttpsTrustManager.allowAllSSL();
 

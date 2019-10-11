@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,12 +48,14 @@ public class NotificationList extends AppCompatActivity {
     private ProgressDialog pDialog;
     ModelNotificationList modelNotificationList;
     AppPreference appPreference;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_list);
         appPreference = new AppPreference(this);
+        swipeRefreshLayout = findViewById(R.id.swipeToRefresh);
         notifyItemList = new ArrayList<>();
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -60,8 +64,24 @@ public class NotificationList extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("NOTIFICATION LIST");
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         initUI();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(utils.isNetworkAvailable(NotificationList.this)){
+                    if(notifyItemList.isEmpty()){
+                        postConnectionNotificationList(NotificationList.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                    }else{
+                        notifyItemList.clear();
+                        postConnectionNotificationList(NotificationList.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                    }
+                }else{
+                    utils.getSimpleDialog(NotificationList.this,"Deployment Approval","Internet not Available").show();
+                }
+            }
+        });
        // postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
     }
 

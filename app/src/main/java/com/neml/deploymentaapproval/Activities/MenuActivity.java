@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Menu;
@@ -47,6 +49,7 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
     ModelNotificationList modelNotificationList;
     TextView title;
     AppPreference appPreference;
+    SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog pDialog;
 
     @Override
@@ -60,14 +63,31 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
         pDialog.setCancelable(false);
 
         appPreference = new AppPreference(this);
+        swipeRefreshLayout = findViewById(R.id.swipeToRefresh);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Deployment Approval");
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         HttpsTrustManager.allowAllSSL();
 
         initUI();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(utils.isNetworkAvailable(MenuActivity.this)){
+                    if(notificationListArrayList.isEmpty()){
+                        postConnectionNotificationList(MenuActivity.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                    }else{
+                        notificationListArrayList.clear();
+                        postConnectionNotificationList(MenuActivity.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                    }
+                }else{
+                    utils.getSimpleDialog(MenuActivity.this,"Deployment Approval","Internet not Available").show();
+                }
+            }
+        });
 
         notificationListArrayList = new ArrayList<ModelNotificationList>();
         //postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
