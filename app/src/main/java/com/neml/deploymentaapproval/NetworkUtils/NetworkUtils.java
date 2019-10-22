@@ -30,11 +30,11 @@ public class NetworkUtils {
     }
 
 
-    public static void postConnectionSendToken(final Context mContext, String url, String token,String userId){
+    public static void postConnectionSendToken(final Context mContext, String url, String token,String mantisID){
         try {
             Map<String, String> params = new HashMap();
             params.put(Constants.postAttributeName.fcmToken, token);
-            params.put(Constants.postAttributeName.userId,userId);
+            params.put(Constants.postAttributeName.mantisID,mantisID);
             JSONObject parameters = new JSONObject(params);
 
             JsonObjectRequest jsonRequest = new JsonObjectRequest (Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {

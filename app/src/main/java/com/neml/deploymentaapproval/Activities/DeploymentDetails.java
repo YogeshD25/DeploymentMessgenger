@@ -75,7 +75,7 @@ public class DeploymentDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(utils.isNetworkAvailable(DeploymentDetails.this)){
-                    postApprove(DeploymentDetails.this, Constants.UrlLinks.approve,modelNotificationList.getDeploymentNo(),appPreference.getUserID());
+                    postApprove(DeploymentDetails.this, Constants.UrlLinks.approve,modelNotificationList.getDeploymentNo(),appPreference.getMantisID());
                 }else{
                     utils.getSimpleDialog(DeploymentDetails.this,getResources().getString(R.string.app_name),"Internet not Available").show();
                 }
@@ -102,6 +102,7 @@ public class DeploymentDetails extends AppCompatActivity {
             case R.id.menuLogout:
                 appPreference.setUserID(null);
                 appPreference.setPassword(null);
+                appPreference.setMantisID(null);
                 appPreference.setloginDone(false);
                 Intent intentLogin = new Intent(DeploymentDetails.this,MainActivity.class);
                 intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -119,7 +120,7 @@ public class DeploymentDetails extends AppCompatActivity {
         deploymentNo.setText(modelNotificationList.getDeploymentNo());
         requesterName.setText(modelNotificationList.getPreparedBy());
         requestermanager.setText(modelNotificationList.getApprovedBy());
-        createdDate.setText(modelNotificationList.getCreatedDate().substring(0,11));
+        createdDate.setText(modelNotificationList.getCreatedDate().substring(0,19));
         uatApprovalName.setText(modelNotificationList.getUatApprovar());
         projectName.setText(modelNotificationList.getProjectName());
         deploymentType.setText(modelNotificationList.getDeploymentType());
@@ -155,7 +156,7 @@ public class DeploymentDetails extends AppCompatActivity {
             showpDialog();
             Map<String, String> params = new HashMap();
             params.put(Constants.postAttributeName.deploymentNo, deploymentNo);
-            params.put(Constants.postAttributeName.userId, userId);
+            params.put(Constants.postAttributeName.mantisID, userId);
 
             JSONObject parameters = new JSONObject(params);
 
@@ -194,7 +195,7 @@ public class DeploymentDetails extends AppCompatActivity {
                     hidepDialog();
                     error.printStackTrace();
                     Logg.d(error.toString());
-                    utils.getSimpleDialog(mContext,error.getMessage().toString()).show();
+                    //utils.getSimpleDialog(mContext,error.getMessage()).show();
                     //TODO: handle failure
                 }
             });

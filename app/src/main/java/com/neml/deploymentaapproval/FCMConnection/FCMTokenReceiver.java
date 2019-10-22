@@ -57,6 +57,6 @@ public class FCMTokenReceiver extends IntentService {
 
     private void sendTokenToServer() {
         AppPreference appPreference = new AppPreference(getApplicationContext());
-        NetworkUtils.postConnectionSendToken(getApplicationContext(), Constants.UrlLinks.sendToken,token,appPreference.getUserID());
+        NetworkUtils.postConnectionSendToken(getApplicationContext(), Constants.UrlLinks.sendToken,token,appPreference.getMantisID());
     }
 }

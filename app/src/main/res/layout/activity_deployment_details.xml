@@ -79,6 +79,7 @@
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="Deployment NO"
+                    android:inputType="textMultiLine"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
@@ -118,6 +119,7 @@
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="ReqesterName"
+                    android:inputType="textMultiLine"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
@@ -152,6 +154,7 @@
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="skjfdhkdjhksjdh"
+                    android:inputType="textMultiLine"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
@@ -187,6 +190,7 @@
                     android:singleLine="true"
                     android:gravity="center_vertical"
                     android:text="asjfhksjdfh"
+                    android:inputType="textMultiLine"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
             </LinearLayout>
@@ -220,6 +224,7 @@
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="jsgdfhdgfhj"
+                    android:inputType="textMultiLine"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:gravity="center_vertical"
                     android:textColor="@color/blackColor" />
@@ -249,12 +254,14 @@
                 <TextView
                     android:id="@+id/projectName"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/height_component"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
-                    android:inputType="number"
                     android:paddingLeft="10dp"
-                    android:singleLine="true"
                     android:text="ashgdjshagdj"
+                    android:maxLines="5"
+                    android:minLines="2"
+                    android:singleLine="false"
+                    android:lines="2"
                     android:gravity="center_vertical"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
@@ -284,12 +291,11 @@
                     android:id="@+id/deploymentType"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
-
                     android:layout_weight="1"
-                    android:inputType="number"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
+                    android:inputType="textMultiLine|number"
                     android:text="jasgjkashdkjah"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/blackColor" />
@@ -320,7 +326,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
                     android:layout_weight="1"
-                    android:inputType="number"
+                    android:inputType="textMultiLine|number"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="hsagjdjhagsdjh"
@@ -354,7 +360,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/height_component"
                     android:layout_weight="1"
-                    android:inputType="number"
+                    android:inputType="textMultiLine|number"
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:text="jashdkajshd"

@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                             appPreference.setUserID(userId);
                             appPreference.setPassword(password);
                             appPreference.setloginDone(true);
+                            appPreference.setMantisID(response.getString("mantisId"));
                             //Make Intent to pass on next activity
                             Intent intent =  new Intent(mContext,MenuActivity.class);
                             startActivity(intent);
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 hidepDialog();
                 error.printStackTrace();
                 Logg.d(error.toString());
-                utils.getSimpleDialog(mContext,error.getMessage().toString()).show();
+               // utils.getSimpleDialog(mContext,error.getMessage().toString()).show();
                 //TODO: handle failure
             }
         });

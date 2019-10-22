@@ -72,10 +72,12 @@ public class NotificationList extends AppCompatActivity {
             public void onRefresh() {
                 if(utils.isNetworkAvailable(NotificationList.this)){
                     if(notifyItemList.isEmpty()){
-                        postConnectionNotificationList(NotificationList.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                        postConnectionNotificationList(NotificationList.this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
+                        swipeRefreshLayout.setRefreshing(false);
                     }else{
                         notifyItemList.clear();
-                        postConnectionNotificationList(NotificationList.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                        postConnectionNotificationList(NotificationList.this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }else{
                     utils.getSimpleDialog(NotificationList.this,"Deployment Approval","Internet not Available").show();
@@ -91,11 +93,11 @@ public class NotificationList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public  void postConnectionNotificationList(final Context mContext, String url, final String userId, final String deploymentNo) {
+    public  void postConnectionNotificationList(final Context mContext, String url, final String mantisId, final String deploymentNo) {
         showpDialog();
         Map<String, String> params = new HashMap();
         params.put(Constants.postAttributeName.deploymentNo, "");
-        params.put(Constants.postAttributeName.userId, userId);
+        params.put(Constants.postAttributeName.mantisID, mantisId);
         JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
             @Override
@@ -111,11 +113,11 @@ public class NotificationList extends AppCompatActivity {
                         System.out.println(jsonObj);
                         String DeploymentNo = jsonObj.getString("deploymentNo");
                         String rfcSeqNo = jsonObj.getString("rfcSeqNo");
-                        String requesterName = jsonObj.getString("preparedBy");
-                        String requesterManager = jsonObj.getString("approvedBy");
+                        String requesterName = jsonObj.getString("preparedName");
+                        String requesterManager = jsonObj.getString("approvedByName");
                         String applicationUrl = jsonObj.getString("projectUrl");
                         String createdDate = jsonObj.getString("createdDateStr");
-                        String uatApprovalName = jsonObj.getString("uatApprovar");
+                        String uatApprovalName = jsonObj.getString("uatApprovarName");
                         String projectName = jsonObj.getString("projectName");
                         String isApproverApproved = jsonObj.getString("isApproverApproved");
                         String DeploymentType = jsonObj.getString("deploymentType");
@@ -186,7 +188,7 @@ public class NotificationList extends AppCompatActivity {
 
             case R.id.menuSettings:
                 if(utils.isNetworkAvailable(NotificationList.this)){
-                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
                 }else{
                     utils.getSimpleDialog(NotificationList.this,getResources().getString(R.string.app_name),"Internet not Available").show();
                 }
@@ -196,6 +198,7 @@ public class NotificationList extends AppCompatActivity {
             case R.id.menuLogout:
                 appPreference.setUserID(null);
                 appPreference.setPassword(null);
+                appPreference.setMantisID(null);
                 appPreference.setloginDone(false);
                 Intent intentLogin = new Intent(NotificationList.this,MainActivity.class);
                 intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -214,10 +217,10 @@ public class NotificationList extends AppCompatActivity {
     protected void onStart() {
         if(utils.isNetworkAvailable(NotificationList.this)){
             if(notifyItemList.isEmpty()){
-                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
             }else{
                 notifyItemList.clear();
-                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
             }
         }else{
             utils.getSimpleDialog(NotificationList.this,"Deployment Approval","Internet not Available").show();

@@ -78,10 +78,12 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
             public void onRefresh() {
                 if(utils.isNetworkAvailable(MenuActivity.this)){
                     if(notificationListArrayList.isEmpty()){
-                        postConnectionNotificationList(MenuActivity.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                        postConnectionNotificationList(MenuActivity.this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
+                        swipeRefreshLayout.setRefreshing(false);
                     }else{
                         notificationListArrayList.clear();
-                        postConnectionNotificationList(MenuActivity.this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                        postConnectionNotificationList(MenuActivity.this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }else{
                     utils.getSimpleDialog(MenuActivity.this,"Deployment Approval","Internet not Available").show();
@@ -110,7 +112,7 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
 
             case R.id.menuSettings:
                 if(utils.isNetworkAvailable(MenuActivity.this)){
-                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                    postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
                 }else{
                     utils.getSimpleDialog(MenuActivity.this,getResources().getString(R.string.app_name),"Internet not Available").show();
                 }
@@ -119,6 +121,7 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
             case R.id.menuLogout:
                 appPreference.setUserID(null);
                 appPreference.setPassword(null);
+                appPreference.setMantisID(null);
                 appPreference.setloginDone(false);
                 Intent intentLogin = new Intent(MenuActivity.this,MainActivity.class);
                 intentLogin.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -155,11 +158,11 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
         finish();
         super.onBackPressed();
     }
-    public  void postConnectionNotificationList(final Context mContext, String url, final String userId,final String deploymentNo) {
+    public  void postConnectionNotificationList(final Context mContext, String url, final String mantisID,final String deploymentNo) {
         showpDialog();
         Map<String, String> params = new HashMap();
         params.put(Constants.postAttributeName.deploymentNo, "");
-        params.put(Constants.postAttributeName.userId, userId);
+        params.put(Constants.postAttributeName.mantisID, mantisID);
         JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
             @Override
@@ -175,11 +178,11 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
                         System.out.println(jsonObj);
                         String DeploymentNo = jsonObj.getString("deploymentNo");
                         String rfcSeqNo = jsonObj.getString("rfcSeqNo");
-                        String requesterName = jsonObj.getString("preparedBy");
-                        String requesterManager = jsonObj.getString("approvedBy");
+                        String requesterName = jsonObj.getString("preparedName");
+                        String requesterManager = jsonObj.getString("approvedByName");
                         String applicationUrl = jsonObj.getString("projectUrl");
                         String createdDate = jsonObj.getString("createdDateStr");
-                        String uatApprovalName = jsonObj.getString("uatApprovar");
+                        String uatApprovalName = jsonObj.getString("uatApprovarName");
                         String projectName = jsonObj.getString("projectName");
                         String isApproverApproved = jsonObj.getString("isApproverApproved");
                         String DeploymentType = jsonObj.getString("deploymentType");
@@ -311,10 +314,10 @@ public class MenuActivity extends AppCompatActivity implements GestureDetector.O
     protected void onStart() {
         if(utils.isNetworkAvailable(MenuActivity.this)){
             if(notificationListArrayList.isEmpty()){
-                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
             }else{
                 notificationListArrayList.clear();
-                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getUserID(),"");
+                postConnectionNotificationList(this, Constants.UrlLinks.details,appPreference.getMantisID(),"");
             }
         }else{
             utils.getSimpleDialog(MenuActivity.this,"Deployment Approval","Internet not Available").show();

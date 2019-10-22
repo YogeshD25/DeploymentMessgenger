@@ -37,6 +37,15 @@ public class AppPreference {
         editor.putString(Keys.KEY_USERID, userID);
         editor.commit();
     }
+    public String getMantisID() {
+        return preferences.getString(Keys.KEY_MANTIS_ID, null);
+    }
+
+    public void setMantisID(String userID) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Keys.KEY_MANTIS_ID, userID);
+        editor.commit();
+    }
     public boolean getLoginDone() {
         return preferences.getBoolean(Keys.KEY_IS_LOGIN_DONE, false);
     }
@@ -54,5 +63,6 @@ public class AppPreference {
         String KEY_USERID = "_userId";
         String KEY_USER_PASSWORD = "_password";
         String KEY_IS_LOGIN_DONE = "false";
+        String KEY_MANTIS_ID = "_mantisID";
     }
 }
